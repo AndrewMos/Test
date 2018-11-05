@@ -1,6 +1,7 @@
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.time.LocalTime;
 import java.util.*;
 import java.io.*;
 
@@ -63,6 +64,15 @@ public class main {
 
 
     public static void main(String[] args){
+
+        LocalTime thisSec;
+
+        thisSec = LocalTime.now();
+
+
+
+
+
         List<Person> people = new ArrayList<Person>();
 
         Scheduler scheduler = null;
@@ -84,8 +94,20 @@ public class main {
                 .withSchedule(cronSchedule("0/30 * * * * ? *"))
                 .build();
 
+            // define the job and tie it to our HelloJob class
+            JobDetail job2 = newJob(CheckTimeJob.class)
+                    .withIdentity("job2", "group1")
+                    .build();
+
+            // Trigger the job to run now, and then repeat every 40 seconds
+            Trigger trigger2 = newTrigger()
+                    .withIdentity("trigger2", "group1")
+                    .withSchedule(cronSchedule("0/60 * * * * ? *"))
+                    .build();
+
         // Tell quartz to schedule the job using our trigger
         scheduler.scheduleJob(job, trigger);
+        scheduler.scheduleJob(job2, trigger2);
         scheduler.start();
 
         } catch (SchedulerException e) {
