@@ -9,6 +9,7 @@ public class RewriteJob implements org.quartz.Job {
     }
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
+
         JobKey key = context.getJobDetail().getKey();
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 
