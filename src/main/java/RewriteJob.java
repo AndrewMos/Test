@@ -15,6 +15,8 @@ public class RewriteJob implements org.quartz.Job {
 
         List<Person> people = (ArrayList)context.getMergedJobDataMap().get("people");
 
+
+
         List<String> cities = new ArrayList<String>();
         for (Person s:people) {
             cities.add(s.city);
